@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Ucapan Ulang Tahun</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Baloo+2&display=swap');
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Baloo 2', cursive, sans-serif;
+      
+        /* ganti background website */
+        background-image: url(https://images.unsplash.com/photo-1532446997697-0b92fdc456fe?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #333;
+      padding: 10px;
+    }
+    #container {
+      background: #fff;
+      border-radius: 25px;
+      width: 350px;
+      max-width: 100vw;
+      padding: 20px 25px 40px 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      text-align: center;
+      position: relative;
+      box-sizing: border-box;
+    }
+    input[type="text"] {
+      width: 100%;
+      max-width: 300px;
+      padding: 10px;
+      font-size: 1.25rem;
+      border: 2px solid #f8b500;
+      border-radius: 15px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus {
+      border-color: #ff6e6e;
+    }
+    button {
+      margin-top: 15px;
+      background: #ff6e6e;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 25px;
+      font-size: 1.2rem;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 6px 10px rgba(255,110,110,0.6);
+      transition: background-color 0.3s ease;
+      user-select: none;
+      min-width: 120px;
+      word-wrap: break-word;
+    }
+    button:hover {
+      background-color: #ff3b3b;
+    }
+    /* Happy Birthday Moving Text */
+    .marquee {
+      display: inline-block;
+      overflow: hidden;
+      position: relative;
+      white-space: nowrap;
+      font-weight: 700;
+      font-size: 2rem;
+      color: #ff3b3b;
+      margin: 15px 0;
+    }
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marqueeAnim 6s linear infinite;
+    }
+    @keyframes marqueeAnim {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Small clickable text below */
+    #continueText {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 8px;
+      cursor: pointer;
+      text-decoration: underline;
+      user-select: none;
+    }
+    #continueText:hover {
+      color: #ff3b3b;
+    }
+
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    .messageBox {
+      background: #ff6e6e22;
+      border: 2px solid #ff3b3b;
+      border-radius: 20px;
+      padding: 15px;
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #ff3b3b;
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
+      user-select: none;
+      min-height: 32px;
+      word-wrap: break-word;
+    }
+    /* Removed marquee animation from messages that will be typed */
+
+    /* star rating box */
+    #starBox {
+      margin-top: 30px;
+      user-select: none;
+    }
+    .star {
+      font-size: 2.5rem;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      margin: 0 3px;
+      user-select: none;
+      text-shadow: 1px 1px 0 #fff;
+      touch-action: manipulation;
+    }
+    .star.highlighted {
+      color: #ff3b3b;
+      text-shadow: 0 0 10px #ff3b3baa;
+      transform: scale(1.2);
+    }
+
+    /* waiting message */
+    #waitingMsg {
+      margin-top: 25px;
+      font-size: 1.2rem;
+      color: #ff6e6e;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
+      height: 28px;
+    }
+    #waitingMsg span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marqueeAnim 5s linear infinite;
+    }
+
+    /* final greeting text */
+    #finalGreeting {
+      margin-top: 30px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ff3b3b;
+      user-select: none;
+      min-height: 48px;
+      word-wrap: break-word;
+    }
+   #giftMessageBox {
+  background: #ff6e6e22; /* Warna latar belakang */
+  border: 2px solid #ff3b3b; /* Warna border */
+  border-radius: 20px; /* Sudut melengkung */
+  padding: 30px; /* Menambah padding */
+  margin-top: 20px; /* Jarak atas */
+  font-weight: 600; /* Ketebalan font */
+  font-size: 1.5rem; /* Ukuran font lebih besar */
+  color: #ff3b3b; /* Warna teks */
+  white-space: normal; /* Mengizinkan teks membungkus */
+  overflow: visible; /* Menampilkan overflow */
+  position: relative; /* Posisi relatif */
+  user-select: none; /* Mencegah pemilihan teks */
+  min-height: 100px; /* Tinggi minimum */
+  word-wrap: break-word; /* Memungkinkan pemotongan kata */
+}
+
+    #continueFinalBtn, #openGalleryBtn {
+      margin-top: 20px;
+      background: #ff6e6e;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 6px 10px rgba(255,110,110,0.6);
+      transition: background-color 0.3s ease;
+      user-select: none;
+      min-width: 120px;
+    }
+    #continueFinalBtn:hover, #openGalleryBtn:hover {
+      background-color: #ff3b3b;
+    }
+
+    /* initial message box with heart */
+    #initialMessage {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #ff3b3b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 2px solid #ff3b3b;
+      border-radius: 25px;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      user-select: none;
+      transition: background-color 0.3s ease;
+      word-wrap: break-word;
+    }
+    #initialMessage:hover {
+      background-color: #ffbaba;
+    }
+    #initialMessage > .heart {
+      font-size: 2rem;
+      user-select: none;
+    }
+
+    /* gift question box */
+    #giftQuestionBox {
+      margin-top: 25px;
+      border: 2px solid #ff3b3b;
+      border-radius: 20px;
+      padding: 20px;
+      font-size: 1.3rem;
+      color: #ff3b3b;
+      font-weight: 700;
+      user-select: none;
+      word-wrap: break-word;
+    }
+    #giftButtons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+    .giftBtn {
+      background: #ff6e6e;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 18px;
+      font-size: 1.2rem;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 6px 10px rgba(255,110,110,0.6);
+      transition: background-color 0.3s ease;
+      user-select: none;
+      min-width: 100px;
+      word-wrap: break-word;
+    }
+    .giftBtn:hover {
+      background-color: #ff3b3b;
+    }
+
+    
+    /* Responsive adjustments */
+    @media (max-width: 400px) {
+      #container {
+        padding: 15px 20px 30px 20px;
+        width: 100%;
+      }
+      input[type="text"] {
+        font-size: 1.1rem;
+      }
+      button {
+        font-size: 1.1rem;
+        padding: 10px 18px;
+        min-width: 100px;
+      }
+      .messageBox, #initialMessage, #giftQuestionBox {
+        font-size: 1rem;
+        padding: 12px;
+      }
+      #finalGreeting {
+        font-size: 1.2rem;
+        min-height: 40px;
+      }
+      .star {
+        font-size: 2rem;
+        margin: 0 2px;
+      }
+     
+    }
+  </style>
+</head>
+<body>
+  <div id="container" role="main">
+    <!-- Step 0: Initial message with heart -->
+    <div id="step0">
+      <div id="initialMessage" role="button" tabindex="0" aria-label="Klik pesan">
+        <span class="heart" aria-hidden="true">❤️</span>
+        Klik pesannya
+      </div>
+    </div>
+
+    <!-- Step 1: Input form -->
+    <div id="step1" style="display:none;">
+      <h2>Masukkan Nama Kamu</h2>
+      <input type="text" id="nameInput" placeholder="Tulis namamu..." autocomplete="off" aria-label="Input nama kamu" />
+      <br />
+      <button id="okBtn" disabled>Ok</button>
+    </div>
+
+    <!-- Step 2: Animated doll and Happy Birthday text -->
+    <div id="step2" style="display:none;">
+      <div>     
+         <img
+        class="cat-img"
+        src="https://media.tenor.com/h4gJajgeNZUAAAAj/bday.gif"
+        alt="Picture of a cat"
+        width="200"
+      /></div>
+      <div class="marquee" aria-live="polite">
+        <span id="happyText"></span>
+      </div>
+      <div class="messageBox" id="messageBoxStep2" tabindex="0"></div>
+      <div id="continueText">klik sini untuk lanjut</div>
+    </div>
+
+    <!-- Step 3: Star rating box -->
+    <div id="step3" style="display:none;">
+       <div>     
+         <img
+        class="cat-img"
+        src="https://media.tenor.com/1yp3vzk0K0QAAAAi/birbhaus-hehe.gif"
+        alt="Picture of a cat"
+        width="200"
+      /></div>
+      <div class="messageBox" style="white-space: normal; font-size: 1.25rem;">
+        klik 4 BINTANG di Bawah!
+      </div>
+      <div id="starBox" aria-label="Klik 4 bintang" role="radiogroup" tabindex="0">
+        <span class="star" data-star="1" role="radio" aria-checked="false" tabindex="-1" aria-label="Bintang 1">&#9733;</span>
+        <span class="star" data-star="2" role="radio" aria-checked="false" tabindex="-1" aria-label="Bintang 2">&#9733;</span>
+        <span class="star" data-star="3" role="radio" aria-checked="false" tabindex="-1" aria-label="Bintang 3">&#9733;</span>
+        <span class="star" data-star="4" role="radio" aria-checked="false" tabindex="-1" aria-label="Bintang 4">&#9733;</span>
+      </div>
+    </div>
+
+    <!-- Step 4: Waiting message -->
+    <div id="step4" style="display:none;">
+       <div>     
+         <img
+        class="cat-img"
+        src="https://media.tenor.com/r5cJeEM3XmAAAAAi/cat.gif"
+        alt="Picture of a cat"
+        width="200"
+      /></div>
+      <div id="waitingMsg" aria-live="polite"><span>tunggu..Baca Baik-Baik Yahhh</span></div>
+    </div>
+
+    <!-- Step 5: Final greeting -->
+    <div id="step5" style="display:none;">
+       <div>     
+         <img
+        class="cat-img"
+        src="https://media.tenor.com/r5cJeEM3XmAAAAAi/cat.gif"
+        alt="Picture of a cat"
+        width="200"
+      /></div>
+      <div id="finalGreeting"></div>
+      <button id="continueFinalBtn">Lanjut</button>
+
+    </div>
+
+    <!-- Step 6: Gift question -->
+    <div id="step6" style="display:none;">
+       <div>     
+         <img
+        class="cat-img"
+        src="https://media.tenor.com/r5cJeEM3XmAAAAAi/cat.gif"
+        alt="Picture of a cat"
+        width="200"
+      /></div>
+      <div id="giftQuestionBox">
+        Ona, mau kado gak?
+        <div id="giftButtons">
+          <button id="giftYes" class="giftBtn" aria-label="Mau Kado">Mau Banget</button>
+          <button id="giftNo" class="giftBtn" aria-label="Mau Aja">Mau Aja</button>
+        </div>
+      </div>
+    </div>
+
+  <!-- Step 7: Gift message -->
+<div id="step7" style="display:none;">
+   <div>     
+         <img
+        class="cat-img"
+        src="https://media.tenor.com/r5cJeEM3XmAAAAAi/cat.gif"
+        alt="Picture of a cat"
+        width="200"
+      /></div>
+  <div class="messageBox" tabindex="10" id="giftMessageBox">
+    <!-- Pesan akan ditampilkan di sini -->
+  </div>
+ <div id="galleryContent" style="margin-top: 20px;">
+    <img src="images/foto1.jpg" alt="Foto 1" width="200">
+    <img src="images/foto2.jpg" alt="Foto 2" width="200">
+</div>
+
+</div>
+
+
+   
+  </div>
+
+  <script>
+    // Elements
+    const step0 = document.getElementById('step0');
+    const initialMessage = document.getElementById('initialMessage');
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const step4 = document.getElementById('step4');
+    const step5 = document.getElementById('step5');
+    const step6 = document.getElementById('step6');
+    const step7 = document.getElementById('step7');
+
+
+    const nameInput = document.getElementById('nameInput');
+    const okBtn = document.getElementById('okBtn');
+    const happyText = document.getElementById('happyText');
+    const continueText = document.getElementById('continueText');
+    const messageBoxStep2 = document.getElementById('messageBoxStep2');
+    const starBox = document.getElementById('starBox');
+    const stars = starBox.querySelectorAll('.star');
+    const waitingMsg = document.getElementById('waitingMsg');
+    const continueFinalBtn = document.getElementById('continueFinalBtn');
+    const giftYes = document.getElementById('giftYes');
+    const giftNo = document.getElementById('giftNo');
+    const giftMessageBox = document.getElementById('giftMessageBox');
+    const finalGreeting = document.getElementById('finalGreeting');
+
+    // Helper function for typing effect
+    function typeText(element, text, speed = 70, callback) {
+      element.textContent = '';
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        } else if (callback) {
+          callback();
+        }
+      }
+      type();
+    }
+
+    // Show only the specified step, hide others
+    function showStep(stepToShow) {
+      [step0, step1, step2, step3, step4, step5, step6, step7].forEach((step) => {
+        step.style.display = (step === stepToShow) ? 'block' : 'none';
+      });
+    }
+
+    // Initial: Show step0
+    showStep(step0);
+
+    // Step 0 -> Step 1: Show input form on clicking initial message
+    initialMessage.addEventListener('click', () => {
+      showStep(step1);
+    });
+    initialMessage.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        showStep(step1);
+      }
+    });
+
+    // Enable OK button only if input has text
+    nameInput.addEventListener('input', () => {
+      okBtn.disabled = nameInput.value.trim().length === 0;
+    });
+
+    // Store user name
+    let userName = '';
+
+    okBtn.addEventListener('click', () => {
+      userName = nameInput.value.trim();
+      if (userName.length === 0) return;
+      // Hide step 1, show step 2
+      happyText.textContent = '';
+      typeText(happyText, `Happy Birthday, ${userName}! `);
+      showStep(step2);
+      nameInput.value = '';
+      okBtn.disabled = true;
+      // Start typing effect for message in step 2
+      typeText(messageBoxStep2, 'aku ada pesan buat kamu nih');
+    });
+
+    // Continue from step 2 message text click
+    continueText.addEventListener('click', () => {
+      showStep(step3);
+      resetStars();
+    });
+
+    // Reset stars to default state
+    function resetStars() {
+      stars.forEach(star => {
+        star.classList.remove('highlighted');
+        star.setAttribute('aria-checked', 'false');
+      });
+      selectedStars = 0;
+    }
+
+    let selectedStars = 0;
+
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        // Highlight the clicked star and all before it
+        selectedStars = parseInt(star.dataset.star);
+        stars.forEach((s, index) => {
+          if (index < selectedStars) {
+            s.classList.add('highlighted');
+            s.setAttribute('aria-checked', 'true');
+          } else {
+            s.classList.remove('highlighted');
+            s.setAttribute('aria-checked', 'false');
+          }
+        });
+        if (selectedStars === 4) {
+          // Proceed to waiting screen after short delay
+          showStep(step4);
+          // Show waiting for 2 seconds then show final
+          setTimeout(() => {
+            showStep(step5);
+            typeText(finalGreeting, 'Selamat ulang tahun ! Semoga segala kebahagiaan dan kesuksesan selalu menyertai kamu.');
+          }, 5000);
+        }
+      });
+      // Keyboard accessibility for stars
+      star.addEventListener('keydown', e => {
+        let index = Array.from(stars).indexOf(e.target);
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          let nextIndex = (index + 1) % stars.length;
+          stars[nextIndex].focus();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          let prevIndex = (index - 1 + stars.length) % stars.length;
+          stars[prevIndex].focus();
+        } else if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          stars[index].click();
+        }
+      });
+    });
+
+    continueFinalBtn.addEventListener('click', () => {
+      // Show gift question box
+      showStep(step6);
+    });
+
+    giftYes.addEventListener('click', () => {
+      // Show gift message box with typing effect
+      showStep(step7);
+      typeText(giftMessageBox, 'Cc lucu gausah yah, sudah gede kan wkwkw, buka dulu deh pintunya..');
+    });
+
+    giftNo.addEventListener('click', () => {
+      // If user clicks no, just stay or optionally reload
+      alert('Oke~ Semoga harimu menyenangkan! 🎉');
+      location.reload();
+    });
+
+   
+  </script>
+</body>
+</html>
+
