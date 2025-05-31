@@ -402,10 +402,20 @@
   <!-- Step 7: Gift message -->
 <div id="step7" style="display:none;">
   <!-- Menambahkan elemen video -->
-  <video width="320" height="240" controls autoplay muted>
+ <div style="margin-top: 20px;">
+  <video id="myVideo" width="320" height="240" controls>
     <source src="images/video1.mp4" type="video/mp4">
     Browser Anda tidak mendukung elemen video.
   </video>
+  <button id="playButton">Play Video</button>
+</div>
+  <script>
+  const video = document.getElementById('myVideo');
+  const playButton = document.getElementById('playButton');
+  playButton.addEventListener('click', () => {
+    video.play();
+  });
+</script>
   <div class="messageBox" tabindex="10" id="giftMessageBox">
     <!-- Pesan akan ditampilkan di sini -->
   </div>
